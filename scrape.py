@@ -5,7 +5,7 @@ import pandas as pd
 from requests_html import HTMLSession
 
 BASE_URL = 'http://www.uschess.org/msa/'
-PLAYER_URL = 'http://www.uschess.org/msa/MbrDtlTnmtHst.php?15397813'
+PLAYER_URL = 'http://www.uschess.org/msa/MbrDtlTnmtHst.php?15397834'
 ID = PLAYER_URL[45:53]
 MAX_PAGE = 4
 def get_data(page):
@@ -48,6 +48,7 @@ def main():
     
 
     data = open(ID+'.csv', 'w')
+    data.write('Date' + ',' + 'Rating' + '\n')
     for t in range(0, len(TOURNAMENTS)):
         data.write(TOURNAMENTS[t]['date'] + ',' + TOURNAMENTS[t]['arating'] + '\n')
 

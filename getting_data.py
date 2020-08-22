@@ -48,7 +48,6 @@ def cleaning(pi, df):
     df = df.dropna()
     return df
 
-
 def visualize(pi, df):
     fig = px.line(df, x='Date', y='Rating', title="Graph of " + pi)
     fig.write_image(pi + ".png")
@@ -70,7 +69,7 @@ def main():
         for tourney in page_data:
             TOURNAMENTS.append(getting_tournament_data(tourney))
     
-    DATA_FILE = PLAYER_ID
+    DATA_FILE = PLAYER_ID + ".csv"
     data = open(DATA_FILE, 'w')
     data.write('Date' + ',' + 'Rating' + '\n')
     for t in range(0, len(TOURNAMENTS)):
@@ -80,13 +79,6 @@ def main():
     NEW_DATA_FILE =  "data/" + DATA_FILE
     print("YES")
     print("data/" + str(PLAYER_ID) + ".csv")
-
-    df = pd.read_csv(f'{NEW_DATA_FILE}.csv')
-    df = cleaning(PLAYER_ID, df)
-    print(df.tail())
-    df.to_csv(f'{NEW_DATA_FILE}.csv')
-    visualize(PLAYER_ID, df)
-
 
 
 if __name__ == "__main__":

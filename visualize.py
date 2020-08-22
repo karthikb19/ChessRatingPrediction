@@ -1,46 +1,39 @@
-import pandas as pd
-import matplotlib.pyplot as plt
+import pandas as pd 
+import plotly.express as px
+import plotly.graph_objects as go  
 import math
-def roundup(x):
-    return int(math.ceil(x / 100.0)) * 100
 
-def tick_data(x):
-    return list(dict.fromkeys(x))
 
-PLAYER_URL = 'http://www.uschess.org/msa/MbrDtlTnmtHst.php?15397834'
-ID = PLAYER_URL[45:53]
+def cleaning(pi, df):
+    labels = df["Rating"]
+    for i in range(len(labels)):
+        print(labels[i])
+        if(len(str((labels[i]))) == 9 or len(str((labels[i]))) == 8):
+            labels[i] =  labels[i][0:3]
+        elif(len(str((labels[i])))) == 10:
+            labels[i] =  labels[i][0:4]
+        else:
+            continue
 
-NAME = ID + ".csv"
-IMG = ID + ".png"
-df =  pd.read_csv(NAME)
-df = df.dropna()
-df.to_csv("updated_sam.csv")
-print(df.head())
-print(len(df))
+    df = df.dropna()
+    return df
 
-# df = df.sort_values(by="Date", ascending=1)
+def visualize(pi, df):
+    fig = px.line(df, x='Date', y='Rating', title="Graph of " + pi)
+    fig.write_image(pi + ".png")
+    fig.show()
 
-# rating_data = df["Rating"]
-# dates = df["Date"]
 
-# upd = []
-# for rate in rating_data:
-#     rate = roundup(rate)
-#     upd.append(rate)
 
-# ticks_labels = tick_data(upd)
-# ticks_labels.reverse()
-# rating_dates = []
-# for date in dates:
-#     date = date[0:4]
-#     rating_dates.append(date)
+def main():
+    print("Player ID: ")
+    PLAYER_ID = input()
+    DATA_PLAYER_ID = "data/" + PLAYER_ID + ".csv"
 
-# xyicks = rating_dates[::-1]
+    df = pd.read_csv(DATA_PLAYER_ID)
+    df = cleaning(PLAYER_ID, df)
+    df.to_csv(DATA_PLAYER_ID)
+    visualize(PLAYER_ID, df)
 
-# plt.plot_date(rating_dates, rating_data)
-# # x = range(11)
-# # y = range(7)
-# # plt.xticks(y, ['2014', '2015', '2016', '2017', '2018', '2019', '2020'])
-# # plt.yticks()
-# # plt.savefig(IMG)
-# plt.show()
+if __name__ == "__main__":
+    main()

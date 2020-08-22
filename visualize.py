@@ -20,7 +20,7 @@ def cleaning(pi, df):
 
 def visualize(pi, df):
     fig = px.line(df, x='Date', y='Rating', title="Graph of " + pi)
-    fig.write_image(pi + ".png")
+    fig.write_image("images/" + pi + ".png")
     fig.show()
 
 

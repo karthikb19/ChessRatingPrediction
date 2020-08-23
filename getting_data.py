@@ -5,8 +5,6 @@ import pandas as pd
 from requests_html import HTMLSession
 import math
 import os
-import plotly.express as px
-import plotly.graph_objects as go  
 import sys 
 
 def get_data(PLAYER_URL, page):
@@ -33,25 +31,6 @@ def getting_tournament_data(tournament):
     }
     print(DATE_RATING)
     return DATE_RATING
-
-def cleaning(pi, df):
-    labels = df["Rating"]
-    for i in range(len(labels)):
-        print(labels[i])
-        if(len(str((labels[i]))) == 9 or len(str((labels[i]))) == 8):
-            labels[i] =  labels[i][0:3]
-        elif(len(str((labels[i])))) == 10:
-            labels[i] =  labels[i][0:4]
-        else:
-            continue
-
-    df = df.dropna()
-    return df
-
-def visualize(pi, df):
-    fig = px.line(df, x='Date', y='Rating', title="Graph of " + pi)
-    fig.write_image(pi + ".png")
-    fig.show()
 
 def main():
     BASE_URL = 'http://www.uschess.org/msa/MbrDtlTnmtHst.php?'
